@@ -1,4 +1,4 @@
-package main
+package day01
 
 import (
 	"bufio"
@@ -14,13 +14,19 @@ func check(e error) {
 	}
 }
 
-func GetHighetstElfCalories(inputFilePath string) {
+func ReadFileByLines(inputFilePath string) *bufio.Scanner {
 	file, err := os.Open(inputFilePath)
 	check(err)
 
 	fileScanner := bufio.NewScanner(file)
 
 	fileScanner.Split(bufio.ScanLines)
+	return fileScanner
+}
+
+func GetHighetstElfCalories(inputFilePath string) {
+
+	fileScanner := ReadFileByLines(inputFilePath)
 
 	currentElfCalories := 0
 	allElfs := []int{}
