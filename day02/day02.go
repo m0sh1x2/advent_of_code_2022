@@ -3,8 +3,6 @@ package day02
 import (
 	"fmt"
 	"strings"
-
-	"github.com/m0sh1x2/advent_of_code_2022/day01"
 )
 
 func IdentifyType(inputType string) int {
@@ -114,8 +112,8 @@ func EngageCombat(playerInputs string) int {
 	// }
 }
 
-func Day02(inputFilePath string) int {
-	inputFile := day01.ReadFileByLines(inputFilePath)
+func Day02Part01(inputFileArrray []string) int {
+	inputFile := inputFileArrray
 	score := 0
 
 	// Map every score based on element
@@ -140,14 +138,14 @@ func Day02(inputFilePath string) int {
 
 	// fmt.Println(points["B"])
 
-	for inputFile.Scan() {
-		elf, human := points[strings.Split(inputFile.Text(), " ")[0]], points[strings.Split(inputFile.Text(), " ")[1]]
+	for _, currentLine := range inputFile {
+		elf, human := points[strings.Split(currentLine, " ")[0]], points[strings.Split(currentLine, " ")[1]]
 
-		fmt.Println(elf)
-		fmt.Println(human)
-		fmt.Println(win[human])
+		// fmt.Println(elf)
+		// fmt.Println(human)
+		// fmt.Println(win[human])
 
-		fmt.Println(" _---- ")
+		// fmt.Println(" _---- ")
 
 		// Wa always get the minimal score of the element that we choose
 		score += human
@@ -162,7 +160,52 @@ func Day02(inputFilePath string) int {
 
 	}
 
-	fmt.Println(score)
+	// fmt.Println(score)
+
+	return score
+}
+
+func Day02Part02(inputFileArrray []string) int {
+	inputFile := inputFileArrray
+	score := 0
+
+	// // Map every score based on element
+	// points := map[string]int{
+	// 	"A": 1,
+	// 	"B": 2,
+	// 	"C": 3,
+	// 	"X": 1,
+	// 	"Y": 2,
+	// 	"Z": 3,
+	// }
+
+	// // get the score based on element
+
+	// win := map[int]int{
+	// 	1: 3, // - Rock wins over Scissor
+	// 	2: 1, // - Paper wins over Rock
+	// 	3: 2, // - Scissors wins over Paper
+	// }
+
+	gameLogic := map[string]int{
+		"A Z": 6 + 2, // Win
+		"B Z": 6 + 3, // Win
+		"C Z": 6 + 1, // Win
+
+		"A X": 3, // Loose Scissors
+		"B X": 1, // Loose
+		"C X": 2, // Loose
+
+		"A Y": 1 + 3, // Draw
+		"B Y": 2 + 3, // Draw
+		"C Y": 3 + 3, // Draw
+	}
+
+	for _, currentLine := range inputFile {
+		score += gameLogic[currentLine]
+	}
+
+	// fmt.Println(score)
 
 	return score
 }

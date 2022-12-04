@@ -14,14 +14,18 @@ func check(e error) {
 	}
 }
 
-func ReadFileByLines(inputFilePath string) *bufio.Scanner {
+func ReadFileByLines(inputFilePath string) []string {
 	file, err := os.Open(inputFilePath)
 	check(err)
 
+	oututArray := []string{}
 	fileScanner := bufio.NewScanner(file)
 
 	fileScanner.Split(bufio.ScanLines)
-	return fileScanner
+	for fileScanner.Scan() {
+		oututArray = append(oututArray, fileScanner.Text())
+	}
+	return oututArray
 }
 
 func GetHighetstElfCalories(inputFilePath string) {
@@ -33,8 +37,8 @@ func GetHighetstElfCalories(inputFilePath string) {
 
 	var highestElfCalories [3]int
 
-	for fileScanner.Scan() {
-		currentLine := fileScanner.Text()
+	for _, line := range fileScanner {
+		currentLine := line
 
 		if currentLine == "" {
 			// fmt.Println(currentElfCalories)
